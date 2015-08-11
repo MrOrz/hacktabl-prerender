@@ -1,0 +1,21 @@
+{
+  "name": "hacktabl-prerender",
+  "version": "0.0.1",
+  "description": "Prerenders hacktabl to static HTML and commits them to hacktabl repository",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Hacktabl",
+    "prerender"
+  ],
+  "author": "MrOrz",
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^5.8.21",
+    "babel-runtime": "^5.8.20",
+    "jsdom": "6.0.1"
+  }
+}
