@@ -1,4 +1,5 @@
 import jsdom from 'jsdom'
+import cheerio from 'cheerio'
 
 const TIMEOUT = 30000;
 
@@ -42,7 +43,31 @@ function prerender(window) {
 
   setTimeout(() => {
     // Get data after digest cycle
-    console.log(jsdom.serializeDocument(window.document));
+    var dom = jsdom.serializeDocument(window.document);
     window.close();
+
+    var $ = cheerio.load(dom);
+    $('[ng-view] *').each((i, elem) => {
+      // Hack the elem's attribs
+
+      for(let key in elem.attribs) {
+        if(elem.attribs.hasOwnProperty(key) && key !== 'id' && key !== 'class'){
+          delete elem.attribs[key];
+        }
+      }
+    });
+
+    $('meta[ng-repeat]').each((i, elem) => {
+      // Hack the elem's attribs
+
+      for(let key in elem.attribs) {
+        if(elem.attribs.hasOwnProperty(key) && key !== 'content' && key !== 'property'){
+          delete elem.attribs[key];
+        }
+      }
+    });
+
+
+    console.log('<!doctype html>' + $.html('html'));
   }, 10);
 }
